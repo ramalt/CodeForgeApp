@@ -19,7 +19,7 @@ public class EntryCommentConfigurations : EntityConfiguration<EntryComment>
 
         builder.HasOne(ec => ec.Owner)
             .WithMany(o => o.EntryComments)
-            .HasForeignKey(ec => ec.EntryId)
+            .HasForeignKey(ec => ec.OwnerId)
             .OnDelete(DeleteBehavior.Restrict);
 
     }

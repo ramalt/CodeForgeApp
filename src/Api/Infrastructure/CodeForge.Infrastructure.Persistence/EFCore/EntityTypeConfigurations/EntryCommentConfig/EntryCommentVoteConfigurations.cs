@@ -15,7 +15,8 @@ public class EntryCommentVoteConfigurations : EntityConfiguration<EntryCommentVo
 
         builder.HasOne(cv => cv.EntryComment)
             .WithMany(ec => ec.EntryCommentVotes)
-            .HasForeignKey(cv => cv.EntryCommentId);
+            .HasForeignKey(cv => cv.EntryCommentId)
+            .OnDelete(DeleteBehavior.Restrict);
 
     }
 }

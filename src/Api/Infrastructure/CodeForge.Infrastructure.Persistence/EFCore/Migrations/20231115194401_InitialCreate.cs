@@ -93,8 +93,8 @@ namespace CodeForge.Infrastructure.Persistence.EFCore.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_EntryComment_User_EntryId",
-                        column: x => x.EntryId,
+                        name: "FK_EntryComment_User_OwnerId",
+                        column: x => x.OwnerId,
                         principalSchema: "dbo",
                         principalTable: "User",
                         principalColumn: "Id",
@@ -138,8 +138,7 @@ namespace CodeForge.Infrastructure.Persistence.EFCore.Migrations
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     VoteType = table.Column<int>(type: "int", nullable: false),
                     EntryId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    OwnerIdId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    OwnerId1 = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    OwnerId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
@@ -151,17 +150,10 @@ namespace CodeForge.Infrastructure.Persistence.EFCore.Migrations
                         principalSchema: "dbo",
                         principalTable: "Entry",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_EntryVote_User_OwnerId1",
-                        column: x => x.OwnerId1,
-                        principalSchema: "dbo",
-                        principalTable: "User",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_EntryVote_User_OwnerIdId",
-                        column: x => x.OwnerIdId,
+                        name: "FK_EntryVote_User_OwnerId",
+                        column: x => x.OwnerId,
                         principalSchema: "dbo",
                         principalTable: "User",
                         principalColumn: "Id",
@@ -205,8 +197,7 @@ namespace CodeForge.Infrastructure.Persistence.EFCore.Migrations
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     VoteType = table.Column<int>(type: "int", nullable: false),
                     EntryCommentId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    OwnerIdId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    OwnerId1 = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    OwnerId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
@@ -218,17 +209,10 @@ namespace CodeForge.Infrastructure.Persistence.EFCore.Migrations
                         principalSchema: "dbo",
                         principalTable: "EntryComment",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_EntryCommentVote_User_OwnerId1",
-                        column: x => x.OwnerId1,
-                        principalSchema: "dbo",
-                        principalTable: "User",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_EntryCommentVote_User_OwnerIdId",
-                        column: x => x.OwnerIdId,
+                        name: "FK_EntryCommentVote_User_OwnerId",
+                        column: x => x.OwnerId,
                         principalSchema: "dbo",
                         principalTable: "User",
                         principalColumn: "Id",
@@ -246,6 +230,12 @@ namespace CodeForge.Infrastructure.Persistence.EFCore.Migrations
                 schema: "dbo",
                 table: "EntryComment",
                 column: "EntryId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_EntryComment_OwnerId",
+                schema: "dbo",
+                table: "EntryComment",
+                column: "OwnerId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_EntryCommentFavorite_EntryCommentId",
@@ -266,16 +256,10 @@ namespace CodeForge.Infrastructure.Persistence.EFCore.Migrations
                 column: "EntryCommentId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_EntryCommentVote_OwnerId1",
+                name: "IX_EntryCommentVote_OwnerId",
                 schema: "dbo",
                 table: "EntryCommentVote",
-                column: "OwnerId1");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_EntryCommentVote_OwnerIdId",
-                schema: "dbo",
-                table: "EntryCommentVote",
-                column: "OwnerIdId");
+                column: "OwnerId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_EntryFavorite_EntryId",
@@ -296,16 +280,10 @@ namespace CodeForge.Infrastructure.Persistence.EFCore.Migrations
                 column: "EntryId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_EntryVote_OwnerId1",
+                name: "IX_EntryVote_OwnerId",
                 schema: "dbo",
                 table: "EntryVote",
-                column: "OwnerId1");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_EntryVote_OwnerIdId",
-                schema: "dbo",
-                table: "EntryVote",
-                column: "OwnerIdId");
+                column: "OwnerId");
         }
 
         /// <inheritdoc />

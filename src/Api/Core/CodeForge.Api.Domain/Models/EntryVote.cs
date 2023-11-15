@@ -9,7 +9,7 @@ public class EntryVote : Entity
     
     public Guid EntryId { get; set; }
     public virtual Entry Entry { get; set; }
-    public User OwnerId { get; set; }
+    public Guid OwnerId { get; set; }
     public virtual User Owner { get; set; }
 }
 

@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CodeForge.Infrastructure.Persistence.EFCore.Migrations
 {
     [DbContext(typeof(CodeForgeAppContext))]
-    [Migration("20231115192037_InitialCreate")]
+    [Migration("20231115194401_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -100,6 +100,8 @@ namespace CodeForge.Infrastructure.Persistence.EFCore.Migrations
 
                     b.HasIndex("EntryId");
 
+                    b.HasIndex("OwnerId");
+
                     b.ToTable("EntryComment", "dbo");
                 });
 
@@ -141,10 +143,7 @@ namespace CodeForge.Infrastructure.Persistence.EFCore.Migrations
                     b.Property<Guid>("EntryCommentId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("OwnerId1")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("OwnerIdId")
+                    b.Property<Guid>("OwnerId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<int>("VoteType")
@@ -154,9 +153,7 @@ namespace CodeForge.Infrastructure.Persistence.EFCore.Migrations
 
                     b.HasIndex("EntryCommentId");
 
-                    b.HasIndex("OwnerId1");
-
-                    b.HasIndex("OwnerIdId");
+                    b.HasIndex("OwnerId");
 
                     b.ToTable("EntryCommentVote", "dbo");
                 });
@@ -199,10 +196,7 @@ namespace CodeForge.Infrastructure.Persistence.EFCore.Migrations
                     b.Property<Guid>("EntryId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("OwnerId1")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("OwnerIdId")
+                    b.Property<Guid>("OwnerId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<int>("VoteType")
@@ -212,9 +206,7 @@ namespace CodeForge.Infrastructure.Persistence.EFCore.Migrations
 
                     b.HasIndex("EntryId");
 
-                    b.HasIndex("OwnerId1");
-
-                    b.HasIndex("OwnerIdId");
+                    b.HasIndex("OwnerId");
 
                     b.ToTable("EntryVote", "dbo");
                 });
@@ -278,7 +270,7 @@ namespace CodeForge.Infrastructure.Persistence.EFCore.Migrations
 
                     b.HasOne("CodeForge.Api.Domain.Models.User", "Owner")
                         .WithMany("EntryComments")
-                        .HasForeignKey("EntryId")
+                        .HasForeignKey("OwnerId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
@@ -311,26 +303,18 @@ namespace CodeForge.Infrastructure.Persistence.EFCore.Migrations
                     b.HasOne("CodeForge.Api.Domain.Models.EntryComment", "EntryComment")
                         .WithMany("EntryCommentVotes")
                         .HasForeignKey("EntryCommentId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("CodeForge.Api.Domain.Models.User", "Owner")
                         .WithMany()
-                        .HasForeignKey("OwnerId1")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("CodeForge.Api.Domain.Models.User", "OwnerId")
-                        .WithMany()
-                        .HasForeignKey("OwnerIdId")
+                        .HasForeignKey("OwnerId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("EntryComment");
 
                     b.Navigation("Owner");
-
-                    b.Navigation("OwnerId");
                 });
 
             modelBuilder.Entity("CodeForge.Api.Domain.Models.EntryFavorite", b =>
@@ -357,26 +341,18 @@ namespace CodeForge.Infrastructure.Persistence.EFCore.Migrations
                     b.HasOne("CodeForge.Api.Domain.Models.Entry", "Entry")
                         .WithMany("EntryVotes")
                         .HasForeignKey("EntryId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("CodeForge.Api.Domain.Models.User", "Owner")
                         .WithMany()
-                        .HasForeignKey("OwnerId1")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("CodeForge.Api.Domain.Models.User", "OwnerId")
-                        .WithMany()
-                        .HasForeignKey("OwnerIdId")
+                        .HasForeignKey("OwnerId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Entry");
 
                     b.Navigation("Owner");
-
-                    b.Navigation("OwnerId");
                 });
 
             modelBuilder.Entity("CodeForge.Api.Domain.Models.Entry", b =>

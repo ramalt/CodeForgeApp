@@ -15,7 +15,8 @@ public class EntryVoteConfigurations : EntityConfiguration<EntryVote>
 
         builder.HasOne(ev => ev.Entry)
             .WithMany(e => e.EntryVotes)
-            .HasForeignKey(ev => ev.EntryId);
+            .HasForeignKey(ev => ev.EntryId)
+            .OnDelete(DeleteBehavior.Restrict);
         
     }
 }

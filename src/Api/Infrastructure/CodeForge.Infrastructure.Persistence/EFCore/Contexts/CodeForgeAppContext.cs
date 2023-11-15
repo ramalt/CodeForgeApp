@@ -7,6 +7,7 @@ namespace CodeForge.Infrastructure.Persistence.EFCore.Contexts;
 
 public class CodeForgeAppContext : DbContext
 {
+    public CodeForgeAppContext(){}
     public CodeForgeAppContext(DbContextOptions options) : base(options)
     {
     }
