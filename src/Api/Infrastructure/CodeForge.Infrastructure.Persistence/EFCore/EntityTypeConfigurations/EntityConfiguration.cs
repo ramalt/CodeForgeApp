@@ -4,9 +4,9 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace CodeForge.Infrastructure.Persistence.EFCore.EntityTypeConfigurations;
 
-public class EntityConfiguration<T> : IEntityTypeConfiguration<T> where T : Entity
+public abstract class EntityConfiguration<T> : IEntityTypeConfiguration<T> where T : Entity
 {
-    public void Configure(EntityTypeBuilder<T> builder)
+    public virtual void Configure(EntityTypeBuilder<T> builder)
     {
         builder.HasKey(e => e.Id);
         builder.Property(e => e.Id).ValueGeneratedOnAdd();

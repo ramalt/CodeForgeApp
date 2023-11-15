@@ -7,8 +7,8 @@ public class EntryCommentVote : Entity
 {
     public VoteType VoteType { get; set; }
     
-    public Guid EntryId { get; set; }
-    public virtual EntryComment Entry { get; set; }
+    public Guid EntryCommentId { get; set; }
+    public virtual EntryComment EntryComment { get; set; }
     public User OwnerId { get; set; }
     public virtual User Owner { get; set; }
 }

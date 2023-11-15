@@ -6,8 +6,8 @@ public class EntryComment : Entity
 {
     public string Content { get; set; }
 
-    public virtual ICollection<EntryCommentVote> EntryVotes { get; set; }
-    public virtual ICollection<EntryCommentFavorite> EntryFavorites { get; set; }
+    public virtual ICollection<EntryCommentVote> EntryCommentVotes { get; set; }
+    public virtual ICollection<EntryCommentFavorite> EntryCommentFavorites { get; set; }
 
     public Guid OwnerId { get; set; }
     public User Owner { get; set; }

@@ -18,7 +18,7 @@ public class CodeForgeAppContext : DbContext
         modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
     }
 
-    const string DEFAULT_SCHEMA = "dbo";
+    public const string DEFAULT_SCHEMA = "dbo";
 
     public DbSet<Entry> Entries { get; set; }
     public DbSet<EntryFavorite> EntryFavorites { get; set; }
