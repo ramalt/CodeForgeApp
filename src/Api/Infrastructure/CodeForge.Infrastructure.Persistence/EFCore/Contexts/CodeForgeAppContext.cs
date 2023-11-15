@@ -18,6 +18,14 @@ public class CodeForgeAppContext : DbContext
         modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
     }
 
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    {
+        if(!optionsBuilder.IsConfigured)
+            optionsBuilder.UseSqlServer("Server=localhost,1433;database=CodeForgeDbDemo;user=sa;password=Root1234!;TrustServerCertificate=true", opt => {
+                opt.EnableRetryOnFailure();
+            });
+    }
+
     public const string DEFAULT_SCHEMA = "dbo";
 
     public DbSet<Entry> Entries { get; set; }
