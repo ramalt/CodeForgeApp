@@ -12,6 +12,7 @@ public class EntryConfigurations : EntityConfiguration<Entry>
         base.Configure(builder);
 
         builder.ToTable("Entry", CodeForgeAppContext.DEFAULT_SCHEMA);
+        
         builder.HasOne(e => e.Owner)
             .WithMany(o => o.Entries)
             .HasForeignKey(e => e.OwnerId);
