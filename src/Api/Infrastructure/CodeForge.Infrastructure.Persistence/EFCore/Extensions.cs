@@ -10,10 +10,16 @@ public static class Extensions
     public static void RegisterSqlServer(this IServiceCollection services, IConfiguration config)
     {
         var sqlServerSettings = config.GetSection("SqlServer");
+
         services.AddDbContext<CodeForgeAppContext>(option => {
             option.UseSqlServer(sqlServerSettings["ConnectionString"], opt => {
                 opt.EnableRetryOnFailure();
             });
         });
+
+        var seeder = new DataSeeder();
+        // seeder.SeedAsync(config).Wait();
+        seeder.SeedAsync(config).GetAwaiter().GetResult();
+
     }
 }
