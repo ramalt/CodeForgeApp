@@ -91,7 +91,7 @@ public abstract class BaseRepository<TEntity> : IBaseRepository<TEntity> where T
         return await query.ToListAsync();
     }
 
-    public virtual async Task<TEntity> GetSingleAsync(Expression<Func<TEntity, bool>> predicate, bool id, bool noTracking = true, params Expression<Func<TEntity, object>>[] includes)
+    public virtual async Task<TEntity> GetSingleAsync(Expression<Func<TEntity, bool>> predicate, bool noTracking = true, params Expression<Func<TEntity, object>>[] includes)
     {
         var query = GetQueryWithIncludes(includes, noTracking);
 
