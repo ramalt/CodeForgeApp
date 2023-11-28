@@ -3,41 +3,35 @@ using CodeForge.Api.Domain.Models.Abstracts;
 
 namespace CodeForge.Api.Application.Interfaces.Repositories;
 
-public interface IBaseRepository<TEntity> where TEntity: Entity
+public interface IBaseRepository<TEntity> where TEntity : Entity
 {
-    //ADD
-    int Add(TEntity entity);
-    Task<int> AddAsync(TEntity entity);
-    int Add(IEnumerable<TEntity> entities);
-    Task<int> AddAsync(IEnumerable<TEntity> entity);
-    int AddOrUpdate(TEntity entity);
-    Task<int> AddOrUpdateAsycnc(TEntity entity);
+    void Add(TEntity entity);
+    Task AddAsync(TEntity entity);
+    void Add(IEnumerable<TEntity> entities);
+    Task AddAsync(IEnumerable<TEntity> entities);
+    void AddOrUpdate(TEntity entity);
+    Task AddOrUpdateAsync(TEntity entity);
 
-    // UPDATE
-    Task<int> UpdateAsync(TEntity entity);
-    int Update(TEntity entity);
-    
-    //DELETE
-    int Delete(TEntity entity);
-    int Delete(Guid id);
-    Task<int> DeleteAsync(TEntity entity);
-    Task<int> DeleteAsync(Guid id);
-    bool DeleteRange(Expression<Func<TEntity, bool>> predicate);
-    Task<bool> DeleteRangeAsync(Expression<Func<TEntity, bool>> predicate);
+    IQueryable<TEntity> AsQueryable();
 
-    //GET
-    IQueryable<TEntity> AsQueriable();
-    Task<List<TEntity>> GetAll(bool notTracking = true);
-    Task<List<TEntity>> GetList(Expression<Func<TEntity, bool>> predicate, bool notTracking = true, Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null, params Expression<Func<TEntity, object>>[] includes);
-    Task<TEntity> GetByIdAsync(Guid id, bool notTracking = true, params Expression<Func<TEntity, object>>[] includes);
-    Task<TEntity> GetSingleAsync(Expression<Func<TEntity, bool>> predicate,bool id, bool notTracking = true, params Expression<Func<TEntity, object>>[] includes);
-    Task<TEntity> FirstOrDefaultAsync(Expression<Func<TEntity, bool>> predicate,bool id, bool notTracking = true, params Expression<Func<TEntity, object>>[] includes);
-    IQueryable<TEntity> Get(Expression<Func<TEntity, bool>> predicate,bool id, bool notTracking = true, params Expression<Func<TEntity, object>>[] includes);
+    Task<TEntity> FirstOrDefaultAsync(Expression<Func<TEntity, bool>> predicate, bool id, bool noTracking = true, params Expression<Func<TEntity, object>>[] includes);
+    IQueryable<TEntity> Get(Expression<Func<TEntity, bool>> predicate, bool id, bool noTracking = true, params Expression<Func<TEntity, object>>[] includes);
+    Task<List<TEntity>> GetAll(bool noTracking = true);
+    Task<TEntity> GetByIdAsync(Guid id, bool noTracking = true, params Expression<Func<TEntity, object>>[] includes);
+    Task<List<TEntity>> GetList(Expression<Func<TEntity, bool>> predicate, bool noTracking = true, Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null, params Expression<Func<TEntity, object>>[] includes);
+    Task<TEntity> GetSingleAsync(Expression<Func<TEntity, bool>> predicate, bool id, bool noTracking = true, params Expression<Func<TEntity, object>>[] includes);
 
-    //BULK
-    Task BulkDeleteById(IEnumerable<Guid> ids);
-    Task BulkDelete(Expression<Func<TEntity, bool>> predicate);
-    Task BulkDelete(IEnumerable<TEntity> entites);
-    Task BulkUpdate(IEnumerable<TEntity> entites);
-    Task BulkAdd(IEnumerable<TEntity> entites);
+    Task BulkAdd(IEnumerable<TEntity> entities);
+    void BulkDelete(Expression<Func<TEntity, bool>> predicate);
+    void BulkDelete(IEnumerable<TEntity> entities);
+    void BulkDeleteById(IEnumerable<Guid> ids);
+    void BulkUpdate(IEnumerable<TEntity> entities);
+
+    void Delete(TEntity entity);
+    void Delete(Guid id);
+    void DeleteRange(Expression<Func<TEntity, bool>> predicate);
+    void DeleteRange(IEnumerable<TEntity> entities);
+
+    void Update(TEntity entity);
+    Task UpdateAsync(TEntity entity);
 }
