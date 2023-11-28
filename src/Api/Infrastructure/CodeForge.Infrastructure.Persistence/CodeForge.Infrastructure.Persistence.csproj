@@ -19,6 +19,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\Core\CodeForge.Api.Domain\CodeForge.Api.Domain.csproj" />
+    <ProjectReference Include="..\..\Core\CodeForge.Api.Application\CodeForge.Api.Application.csproj" />
   </ItemGroup>
 
 </Project>
