@@ -8,9 +8,9 @@ namespace CodeForge.Infrastructure.Persistence.Repositories;
 
 public abstract class BaseRepository<TEntity> : IBaseRepository<TEntity> where TEntity : Entity
 {
-    private readonly CodeForgeAppContext _context;
+    private readonly DbContext _context;
     private DbSet<TEntity> _entity => _context.Set<TEntity>();
-    protected BaseRepository(CodeForgeAppContext context) => _context = context ?? throw new ArgumentNullException(nameof(context));
+    protected BaseRepository(DbContext context) => _context = context ?? throw new ArgumentNullException(nameof(context));
 
     // INSERT
     public virtual void Add(TEntity entity)
