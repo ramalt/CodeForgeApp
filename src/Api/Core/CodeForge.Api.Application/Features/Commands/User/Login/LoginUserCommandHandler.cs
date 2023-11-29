@@ -12,7 +12,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 
 
-namespace CodeForge.Api.Application.Features.Commands.User;
+namespace CodeForge.Api.Application.Features.Commands.User.Login;
 
 public class LoginUserCommandHandler : IRequestHandler<LoginUserCommand, LoginUserViewModel>
 {

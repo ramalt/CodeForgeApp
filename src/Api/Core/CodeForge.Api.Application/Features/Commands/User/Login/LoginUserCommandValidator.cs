@@ -1,7 +1,7 @@
 using CodeForge.Common.ViewModels.RequestModels;
 using FluentValidation;
 
-namespace CodeForge.Api.Application.Features.Commands.User;
+namespace CodeForge.Api.Application.Features.Commands.User.Login;
 
 public class LoginUserCommandValidator : AbstractValidator<LoginUserCommand>
 {

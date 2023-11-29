@@ -171,7 +171,7 @@ public abstract class BaseRepository<TEntity> : IBaseRepository<TEntity> where T
 
     public virtual async Task UpdateAsync(TEntity entity)
     {
-        _entity.Attach(entity);
+        var res = _entity.Attach(entity);
         _context.Entry(entity).State = EntityState.Modified;
     }
 

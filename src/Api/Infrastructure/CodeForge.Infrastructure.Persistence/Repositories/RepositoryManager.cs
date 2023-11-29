@@ -21,5 +21,5 @@ public class RepositoryManager : IRepositoryManager
     public IUserRepository User => _userRepository.Value;
 
     public void Save() => _context.SaveChanges();
-    public Task SaveAsync() => _context.SaveChangesAsync();
+    public async Task<int> SaveAsync() => await _context.SaveChangesAsync();
 }

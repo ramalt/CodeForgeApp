@@ -23,4 +23,21 @@ public class UserController : ControllerBase
         var res = await _sender.Send(command);
         return Ok(res);
     }
+
+    [HttpPost]
+    [Route("register")]
+
+    public async Task<IActionResult> Register([FromBody] CreateUserCommand command)
+    {
+        var res = await _sender.Send(command);
+        return Ok(res);
+    }
+
+    [HttpPost]
+    [Route("update")]
+    public async Task<IActionResult> Update([FromBody] UpdateUserCommand command)
+    {
+        var res = await _sender.Send(command);
+        return Ok(res);
+    }
 }

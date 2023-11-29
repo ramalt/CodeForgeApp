@@ -5,6 +5,6 @@ public interface IRepositoryManager
     IEntryRepository Entry { get; }
     IUserRepository User { get; }
 
-    Task SaveAsync();
+    Task<int> SaveAsync();
     void Save();
 }
