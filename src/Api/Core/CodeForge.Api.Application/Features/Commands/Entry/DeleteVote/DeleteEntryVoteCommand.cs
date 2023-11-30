@@ -1,6 +1,7 @@
+using CodeForge.Common.ViewModels;
 using MediatR;
 
-namespace CodeForge.Common.ViewModels.RequestModels;
+namespace CodeForge.Api.Application.Features.Commands.Entry.DeleteVote;
 
 public class DeleteEntryVoteCommand : IRequest<bool>
 {

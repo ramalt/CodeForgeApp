@@ -1,6 +1,6 @@
+using CodeForge.Api.Application.Features.Commands.Entry.DeleteVote;
 using CodeForge.Common;
 using CodeForge.Common.Infrastructure;
-using CodeForge.Common.ViewModels.RequestModels;
 using MediatR;
 
 namespace CodeForge.Api.Application.Features.Commands.Entry.CreateVote;
