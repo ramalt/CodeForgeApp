@@ -1,5 +1,6 @@
 using CodeForge.Api.Application.Features.Commands.Entry.DeleteVote;
 using CodeForge.Common;
+using CodeForge.Common.Events.Entry;
 using CodeForge.Common.Infrastructure;
 using MediatR;
 
@@ -9,7 +10,7 @@ public class DeleteEntryVoteCommandHandler : IRequestHandler<DeleteEntryVoteComm
 {
     public async Task<bool> Handle(DeleteEntryVoteCommand request, CancellationToken cancellationToken)
     {
-        DeleteEntryVoteCommand @event = new() { EntryId = request.EntryId, CreatedBy = request.CreatedBy, Vote = request.Vote };
+        DeleteEntryVoteEvent @event = new() { EntryId = request.EntryId, CreatedBy = request.CreatedBy, Vote = request.Vote };
 
         QueueFactory.SendMessage(exchangeName: AppConstants.VOTE_EXCHANGE_NAME,
                          exchangeType: AppConstants.DEFAULT_EXCHANGE_TYPE,
