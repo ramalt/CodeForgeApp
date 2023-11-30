@@ -11,8 +11,10 @@ public class MappingProfile : Profile
     {
         CreateMap<User, LoginUserViewModel>().ReverseMap();
 
-        CreateMap<User, CreateUserCommand>().ReverseMap();
+        CreateMap<CreateUserCommand, User>();
 
-        CreateMap<User, UpdateUserCommand>();
+        CreateMap<UpdateUserCommand, User>();
+
+        CreateMap<CreateEntryCommand, Entry>().ReverseMap();
     }
 }
