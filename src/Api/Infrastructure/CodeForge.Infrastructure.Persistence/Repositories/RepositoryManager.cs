@@ -9,16 +9,19 @@ public class RepositoryManager : IRepositoryManager
 
     private readonly Lazy<IEntryRepository> _entryRepository;
     private readonly Lazy<IUserRepository> _userRepository;
+    private readonly Lazy<IEntryCommentRepository> _entryCommentRepository;
 
     public RepositoryManager(CodeForgeAppContext context)
     {
         _context = context;
         _entryRepository = new Lazy<IEntryRepository>(() => new EntryRepository(_context));
         _userRepository = new Lazy<IUserRepository>(() => new UserRepository(_context));
+        _entryCommentRepository = new Lazy<IEntryCommentRepository>(() => new EntryCommentRepository(_context));
     }
 
     public IEntryRepository Entry => _entryRepository.Value;
     public IUserRepository User => _userRepository.Value;
+    public IEntryCommentRepository EntryComment => _entryCommentRepository.Value;
 
     public void Save() => _context.SaveChanges();
     public async Task<int> SaveAsync() => await _context.SaveChangesAsync();

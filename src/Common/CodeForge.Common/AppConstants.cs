@@ -14,7 +14,12 @@ public class AppConstants
 
     #region QUEUES
     public const string USER_EMAIL_CHANGED_QUEUE_NAME = "user_email_changed_queue";
+    
     public const string CREATE_COMMENT_FAV_QUEUE_NAME = "create_entry_comment_fav";
+    public const string DELETE_COMMENT_FAV_QUEUE_NAME = "delete_entry_comment_fav";
+    public const string CREATE_COMMENT_VOTE_QUEUE_NAME = "create_entry_comment_vote";
+    public const string DELETE_COMMENT_VOTE_QUEUE_NAME = "delete_entry_comment_vote";
+
     public const string CREATE_ENTRY_VOTE_QUEUE_NAME = "create_entry_vote";
     public const string DELETE_ENTRY_VOTE_QUEUE_NAME = "delete_entry_vote";
     public const string CREATE_ENTRY_FAV_QUEUE_NAME = "create_entry_fav";
