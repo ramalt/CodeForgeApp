@@ -5,9 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace CodeForge.Api.WebApi.Controllers;
 
-[Route("api/user")]
-[ApiController]
-public class UserController : ControllerBase
+public class UserController : BaseController
 {
     private readonly ISender _sender;
 
@@ -55,6 +53,9 @@ public class UserController : ControllerBase
     [Route("password/change")]
     public async Task<IActionResult> ChangePassword(UserChangePasswordCommand password)
     {
+        if (!password.Id.HasValue)
+            password.Id = UserId;
+
         var res = await _sender.Send(password);
         return Ok(res);
     }

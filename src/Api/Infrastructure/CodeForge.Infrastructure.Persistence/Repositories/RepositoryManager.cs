@@ -14,11 +14,14 @@ public class RepositoryManager : IRepositoryManager
 
     public RepositoryManager(CodeForgeAppContext context)
     {
+
         _context = context;
         _entryRepository = new Lazy<IEntryRepository>(() => new EntryRepository(_context));
         _userRepository = new Lazy<IUserRepository>(() => new UserRepository(_context));
         _entryCommentRepository = new Lazy<IEntryCommentRepository>(() => new EntryCommentRepository(_context));
         _emailConfirmRepository = new Lazy<IEmailConfirmRepository>(() => new EmailConfirmRepository(_context));
+
+        
     }
 
     public IEntryRepository Entry => _entryRepository.Value;
