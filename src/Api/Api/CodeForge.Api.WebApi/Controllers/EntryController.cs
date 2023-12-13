@@ -1,3 +1,4 @@
+using CodeForge.Api.Application.Features.Queries.GetEntries;
 using CodeForge.Common.ViewModels.RequestModels;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -12,26 +13,32 @@ public class EntryController : BaseController
     {
         _sender = sender;
     }
+    [HttpGet]
+    public async Task<IActionResult> GetEntries([FromQuery] GetEntriesQuery query)
+    {
+        var res = await _sender.Send(query);
+        return Ok(res);
+    }
 
     [HttpPost]
     [Route("entry")]
-    public async Task<IActionResult> CreateEntry([FromBody] CreateEntryCommand entry)
+    public async Task<IActionResult> CreateEntry([FromBody] CreateEntryCommand command)
     {
-        if (!entry.OwnerId.HasValue)
-            entry.OwnerId = UserId;
+        if (!command.OwnerId.HasValue)
+            command.OwnerId = UserId;
 
-        var res = await _sender.Send(entry);
+        var res = await _sender.Send(command);
         return Ok(res);
     }
 
     [HttpPost]
     [Route("entry/comment")]
-    public async Task<IActionResult> CreateEntryComment([FromBody] CreateEntryCommentCommand entry)
+    public async Task<IActionResult> CreateEntryComment([FromBody] CreateEntryCommentCommand command)
     {
-        if (!entry.OwnerId.HasValue)
-            entry.OwnerId = UserId;
+        if (!command.OwnerId.HasValue)
+            command.OwnerId = UserId;
 
-        var res = await _sender.Send(entry);
+        var res = await _sender.Send(command);
         return Ok(res);
     }
 }
