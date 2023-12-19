@@ -27,11 +27,14 @@ public class GetEntriesQueryHandler : IRequestHandler<GetEntriesQuery, List<GetE
                         .Where(e => e.CreatedDate >= DateTime.Now.Date)
                         .Where(e => e.CreatedDate <= DateTime.Now.AddDays(1).Date);
 
-        query.Include(e => e.EntryComments)
+        //Sorgunuzun sonucunu almak için ToListAsync metodu öncesinde Take metodu sonucunu bir değişkende saklamanız gerekiyor.
+        var result = await query
+            .Include(e => e.EntryComments)
             .OrderBy(e => Guid.NewGuid())
-            .Take(request.Count);
+            .Take(request.Count)
+            .ToListAsync(cancellationToken);
 
-        return await query.ProjectTo<GetEntriesViewModel>(_mapper.ConfigurationProvider).ToListAsync(cancellationToken);
+        return _mapper.Map<List<GetEntriesViewModel>>(result);
 
     }
 }

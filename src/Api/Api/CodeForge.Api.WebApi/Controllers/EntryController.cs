@@ -1,4 +1,5 @@
 using CodeForge.Api.Application.Features.Queries.GetEntries;
+using CodeForge.Common.ViewModels.Queries;
 using CodeForge.Common.ViewModels.RequestModels;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -20,8 +21,15 @@ public class EntryController : BaseController
         return Ok(res);
     }
 
+    [HttpGet]
+    [Route("subjects")]
+    public async Task<IActionResult> GetEntrySubjects(int page, int pageSize)
+    {
+        var res = await _sender.Send(new GetMainPageEntriesQuery(pageSize: pageSize, page: page, userId: UserId));
+        return Ok(res);
+    }
+
     [HttpPost]
-    [Route("entry")]
     public async Task<IActionResult> CreateEntry([FromBody] CreateEntryCommand command)
     {
         if (!command.OwnerId.HasValue)
@@ -32,7 +40,7 @@ public class EntryController : BaseController
     }
 
     [HttpPost]
-    [Route("entry/comment")]
+    [Route("comment")]
     public async Task<IActionResult> CreateEntryComment([FromBody] CreateEntryCommentCommand command)
     {
         if (!command.OwnerId.HasValue)
