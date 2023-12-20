@@ -1,4 +1,5 @@
 using CodeForge.Api.Application.Features.Commands.User.EmailConfirm;
+using CodeForge.Api.Application.Features.Queries.GetUserDetail;
 using CodeForge.Common.ViewModels.RequestModels;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -58,5 +59,13 @@ public class UserController : BaseController
 
         var res = await _sender.Send(password);
         return Ok(res);
+    }
+
+    [HttpGet("{id}")]
+    public async Task<IActionResult> Get(Guid id)
+    {
+        var user = await _sender.Send(new GetUserDetailQuery(id));
+
+        return Ok(user);
     }
 }

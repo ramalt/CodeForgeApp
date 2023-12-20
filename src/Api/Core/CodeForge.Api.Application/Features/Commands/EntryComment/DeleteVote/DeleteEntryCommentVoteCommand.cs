@@ -9,15 +9,14 @@ public class DeleteEntryCommentVoteCommand : IRequest<bool>
     public VoteType Vote { get; set; }
     public Guid CreatedBy { get; set; }
 
-    public DeleteEntryCommentVoteCommand(Guid createdBy, VoteType vote, Guid id)
+    public DeleteEntryCommentVoteCommand(Guid createdBy, Guid id)
     {
         CreatedBy = createdBy;
-        Vote = vote;
         Id = id;
     }
 
     public DeleteEntryCommentVoteCommand()
     {
-        
+
     }
 }

@@ -3,7 +3,7 @@ using MediatR;
 
 namespace CodeForge.Api.Application.Features.Commands.Entry.DeleteVote;
 
-public class DeleteEntryVoteCommand : IRequest<bool>
+public class DeleteEntryVoteCommand(Guid entryId, Guid createdBy) : IRequest<bool>
 {
     public Guid EntryId { get; set; }
     public Guid CreatedBy { get; set; }
