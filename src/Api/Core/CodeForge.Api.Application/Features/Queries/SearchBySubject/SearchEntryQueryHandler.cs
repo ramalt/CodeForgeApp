@@ -19,7 +19,7 @@ public class SearchEntryQueryHandler : IRequestHandler<SearchEntryQuery, List<Se
     {
         // TODO validation, request.SearchText length should be checked
 
-        var result = _manager.Entry.Get(i => System.Text.RegularExpressions.Regex.IsMatch(i.Subject, $"^{request.SearchText}"), true, true);
+        var result = _manager.Entry.Get(i => EF.Functions.Like(i.Subject, $"{request.SearchText}%"), false, false);
 
         var searchResult = await result
             .Select(i => new SearchEntryViewModel

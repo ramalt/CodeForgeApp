@@ -40,7 +40,7 @@ internal class GetEntryCommentsQueryHandler : IRequestHandler<GetEntryCommentsQu
                 : Common.ViewModels.VoteType.None
         });
 
-        var entries = await list.GetPaged(request.Page, request.PageSize);
+        var entries = await list.GetPaged(currentPage: request.Page, pageSize: request.PageSize);
 
         return entries;
     }

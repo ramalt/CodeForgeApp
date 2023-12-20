@@ -9,7 +9,7 @@ public static class PagingExtension
     {
         var count = await query.CountAsync();
 
-        Page paging = new(currentPage, pageSize, count);
+        Page paging = new(currentPage: currentPage,pageSize: pageSize,totalRowCount: count);
         var data = await query.Skip(paging.Skipped).Take(paging.PageSize).AsNoTracking().ToListAsync();
 
         PageViewModel<T> result = new(data, paging);

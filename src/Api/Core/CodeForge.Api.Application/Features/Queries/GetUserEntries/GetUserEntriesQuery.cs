@@ -14,7 +14,7 @@ public class GetUserEntriesQuery : BasePagedQuery, IRequest<PageViewModel<GetUse
 
     public string UserName { get; set; }
 
-    public GetUserEntriesQuery(Guid? userId, string userName = null, int page = 1, int pageSize = 10) : base(page, pageSize)
+    public GetUserEntriesQuery(Guid? userId, string userName = null, int page = 1, int pageSize = 10) : base(page: page, pageSize: pageSize)
     {
         UserId = userId;
         UserName = userName;

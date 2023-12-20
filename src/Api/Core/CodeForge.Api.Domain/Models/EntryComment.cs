@@ -10,7 +10,7 @@ public class EntryComment : Entity
     public virtual ICollection<EntryCommentFavorite> EntryCommentFavorites { get; set; }
 
     public Guid OwnerId { get; set; }
-    public User Owner { get; set; }
+    public virtual User Owner { get; set; }
     public Guid EntryId { get; set; }
-    public Entry Entry { get; set; }
+    public virtual Entry Entry { get; set; }
 }

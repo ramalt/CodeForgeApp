@@ -6,7 +6,7 @@ namespace CodeForge.Api.Application.Features.Queries.GetEntryComments;
 
 public class GetEntryCommentsQuery : BasePagedQuery, IRequest<PageViewModel<GetEntryCommentsViewModel>>
 {
-    public GetEntryCommentsQuery(Guid entryId, Guid? userId, int page, int pageSize) : base(page, pageSize)
+    public GetEntryCommentsQuery(Guid entryId, Guid? userId, int page, int pageSize) : base(page: page, pageSize: pageSize)
     {
         EntryId = entryId;
         UserId = userId;

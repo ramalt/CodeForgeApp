@@ -45,7 +45,7 @@ public class GetUserEntriesQueryHandler : IRequestHandler<GetUserEntriesQuery, P
             CreatedByUserName = i.Owner.UserName
         });
 
-        var entries = await list.GetPaged(request.Page, request.PageSize);
+        var entries = await list.GetPaged(currentPage: request.Page, pageSize: request.PageSize);
 
         return entries;
     }
