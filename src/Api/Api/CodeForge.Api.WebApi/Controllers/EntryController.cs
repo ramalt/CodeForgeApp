@@ -70,7 +70,7 @@ public class EntryController : BaseController
     }
 
     [HttpGet]
-    [Route("user/comment")]
+    [Route("user")]
     public async Task<IActionResult> GetUserEntries(string userName, Guid userId, int page, int pageSize)
     {
         if (userId == Guid.Empty && string.IsNullOrEmpty(userName))
