@@ -14,4 +14,9 @@ public class CreateEntryCommentCommand : IRequest<Guid>
         OwnerId = ownerId;
         Content = content;
     }
+
+    public CreateEntryCommentCommand()
+    {
+        
+    }
 }
