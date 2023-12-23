@@ -10,18 +10,17 @@ public static class Extensions
 {
     public static void ConfigureHttpClient(this IServiceCollection services)
     {
-        services.AddHttpClient("WebApiClient", config =>
+        services.AddHttpClient("WebApiClient", client =>
         {
-            config.BaseAddress = new Uri("http://http://localhost:5164");
+            client.BaseAddress = new Uri("http://localhost:5164/");
         });
-        // .AddHttpMessageHandler<AuthTokenHandler>();
 
-        services.AddScoped(sp =>
+       services.AddScoped(sp => 
         {
             var clientFactory = sp.GetRequiredService<IHttpClientFactory>();
-
             return clientFactory.CreateClient("WebApiClient");
         });
+
     }
 
     public static void ConfigureAuth(this IServiceCollection services)

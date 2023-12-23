@@ -40,8 +40,7 @@ public class EntryService : IEntryService
 
     public async Task<List<GetEntriesViewModel>> GetEntires()
     {
-        var result = await _client.GetFromJsonAsync<List<GetEntriesViewModel>>("/api/entry?todaysEnties=false&count=30");
-
+        var result = await _client.GetFromJsonAsync<List<GetEntriesViewModel>>("api/Entry?TodaysEntries=false&Count=10");
         return result;
     }
 

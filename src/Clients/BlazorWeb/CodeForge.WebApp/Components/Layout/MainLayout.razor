@@ -1,0 +1,39 @@
+﻿@inherits LayoutComponentBase
+
+<div class="page">
+    <div class="sidebar">
+
+        <h5 class="text-white text-center siderbar-heading">@EntriesSubject</h5>
+        <a class="more-data" @onclick="@RefreshEntries">refresh</a>
+
+        <ul class="list-group">
+            <EntriesComponent @ref="@entriesComponent" />
+        </ul>
+
+    </div>
+
+    <main>
+        <div class="top-row px-4">
+            <a href="https://docs.microsoft.com/aspnet/" target="_blank">About</a>
+        </div>
+
+        <article class="content px-4">
+            @Body
+        </article>
+    </main>
+</div>
+
+@code
+{
+    private EntriesComponent entriesComponent;
+
+    public string EntriesSubject { get; set; } = "bugünnn";
+
+    private async Task RefreshEntries()
+    {
+
+        await entriesComponent.RefreshList();
+
+    }
+
+}

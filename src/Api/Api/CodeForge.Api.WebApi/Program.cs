@@ -2,8 +2,19 @@ using CodeForge.Infrastructure.Persistence;
 using CodeForge.Api.Application;
 using FluentValidation.AspNetCore;
 using CodeForge.Api.WebApi.Infrastructure.Extensions;
+using CodeForge.Api.WebApi.Infrastructure.ActionFilters;
 
 var builder = WebApplication.CreateBuilder(args);
+
+
+builder.Services
+    .AddControllers(opt => opt.Filters.Add<ValidateModelStateFilter>())
+    .AddJsonOptions(opt =>
+    {
+        opt.JsonSerializerOptions.PropertyNamingPolicy = null;
+    })
+    .AddFluentValidation()
+        .ConfigureApiBehaviorOptions(o => o.SuppressModelStateInvalidFilter = true);
 
 
 builder.Services.AddEndpointsApiExplorer();
@@ -12,18 +23,16 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddInfrastructure(builder.Configuration);
 builder.Services.AddApplication();
 
-#pragma warning disable CS0618 // Type or member is obsolete
+// builder.Services.ConfigureAuth(builder.Configuration);
 
-builder.Services.AddControllers()
-    .AddJsonOptions(opt =>
-    {
-        opt.JsonSerializerOptions.PropertyNamingPolicy = null;
-    })
-    .AddFluentValidation();
+// Add Cors
+builder.Services.AddCors(o => o.AddPolicy("MyPolicy", builder =>
+{
+    builder.AllowAnyOrigin()
+           .AllowAnyMethod()
+           .AllowAnyHeader();
+}));
 
-#pragma warning restore CS0618 // Type or member is obsolete
-
-builder.Services.ConfigureAuth(builder.Configuration);
 
 var app = builder.Build();
 
@@ -34,10 +43,12 @@ if (app.Environment.IsDevelopment())
 }
 app.ConfigureExceptionHandling(app.Environment.IsDevelopment());
 
-app.UseAuthentication();
-app.UseAuthorization();
+// app.UseAuthentication();
+// app.UseAuthorization();
 
 app.UseHttpsRedirection();
 app.MapControllers();
+
+app.UseCors("MyPolicy");
 
 app.Run();
