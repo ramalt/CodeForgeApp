@@ -1,0 +1,83 @@
+@if (Entry != null)
+{
+
+    <div class="card border-0 col-md-12">
+
+    <div class="card-body">
+
+        <p class="entry-content">@Entry.Content</p>
+
+
+
+        <EntryFooterFavoriteComponent EntryId="@Entry.Id" OnFavClicked="@OnFavClicked"
+            FavoritedCount="@Entry.FavoritedCount" IsFavorited="@Entry.IsFavorited" />
+
+
+        <EntryFooterRateFavoriteComponent EntryId="@Entry.Id" OnFavClicked="@OnFavClicked"
+            OnVoteClicked="@OnVoteClicked" Vote="@Entry.Vote" FavoritedCount="@Entry.FavoritedCount"
+            IsFavorited="@Entry.IsFavorited" />
+
+
+        <EntryFooterAuthorComponent UserName="@Entry.OwnerUserName" CreateDate="@Entry.CreatedDate" />
+
+    </div>
+</div>
+}
+
+
+@code {
+
+    [Parameter]
+    public GetEntryDetailViewModel Entry { get; set; }
+
+    [Parameter]
+    public bool MyEntries { get; set; }
+
+    [Inject]
+    IVoteService voteService { get; set; }
+
+    [Inject]
+    IFavService favService { get; set; }
+
+    private async Task OnFavClicked(FavClickedEventArgs args)
+    {
+        if (args.IsFaved)
+        {
+            await favService.CreateEntryFav(args.EntryId.Value);
+            Entry.IsFavorited = true;
+            Entry.FavoritedCount++;
+        }
+        else
+        {
+            await favService.DeleteEntryFav(args.EntryId.Value);
+            Entry.IsFavorited = false;
+            Entry.FavoritedCount--;
+        }
+
+        StateHasChanged();
+    }
+
+    private async Task OnVoteClicked(VoteClickedEventArgs args)
+    {
+        if (args.UpVoteDeleted || args.DownVoteDeleted)
+        {
+            await voteService.DeleteEntryVote(args.EntryId);
+            Entry.Vote = VoteType.None;
+            return;
+        }
+
+        if (args.IsUpVoteClicked)
+        {
+            await voteService.CreateEntryUpVote(args.EntryId);
+            Entry.Vote = VoteType.UpVote;
+            return;
+        }
+
+        if (args.IsDownVoteClicked)
+        {
+            await voteService.CreateEntryDownVote(args.EntryId);
+            Entry.Vote = VoteType.DownVote;
+            return;
+        }
+    }
+}

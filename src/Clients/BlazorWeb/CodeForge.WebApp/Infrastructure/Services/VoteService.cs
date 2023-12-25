@@ -13,47 +13,47 @@ public class VoteService : IVoteService
         _client = client;
     }
 
-    public async Task DeleteEntryVote(Guid entryId, CancellationToken cancellationToken)
+    public async Task DeleteEntryVote(Guid entryId)
     {
-        await _client.DeleteAsync($"/api/vote/entry/{entryId}", cancellationToken);
+        await _client.DeleteAsync($"/api/vote/entry/{entryId}");
     }
 
-    public async Task DeleteEntryCommentVote(Guid entryCommentId, CancellationToken cancellationToken)
+    public async Task DeleteEntryCommentVote(Guid entryCommentId)
     {
-        await _client.DeleteAsync($"/api/vote/entry/comment/{entryCommentId}", cancellationToken);
+        await _client.DeleteAsync($"/api/vote/entry/comment/{entryCommentId}");
     }
 
-    public async Task CreateEntryUpVote(Guid entryId, CancellationToken cancellationToken)
+    public async Task CreateEntryUpVote(Guid entryId)
     {
-        await CreateEntryVote(entryId, cancellationToken, VoteType.DownVote);
+        await CreateEntryVote(entryId, VoteType.DownVote);
     }
 
-    public async Task CreateEntryDownVote(Guid entryId, CancellationToken cancellationToken)
+    public async Task CreateEntryDownVote(Guid entryId)
     {
-        await CreateEntryVote(entryId, cancellationToken, VoteType.DownVote);
+        await CreateEntryVote(entryId, VoteType.DownVote);
     }
 
-    public async Task CreateEntryCommentUpVote(Guid entryCommentId, CancellationToken cancellationToken)
+    public async Task CreateEntryCommentUpVote(Guid entryCommentId)
     {
-        await CreateEntryCommentVote(entryCommentId, cancellationToken, VoteType.DownVote);
+        await CreateEntryCommentVote(entryCommentId, VoteType.DownVote);
     }
 
-    public async Task CreateEntryCommentDownVote(Guid entryCommentId, CancellationToken cancellationToken)
+    public async Task CreateEntryCommentDownVote(Guid entryCommentId)
     {
-        await CreateEntryCommentVote(entryCommentId, cancellationToken, VoteType.DownVote);
+        await CreateEntryCommentVote(entryCommentId, VoteType.DownVote);
     }
 
     #region privates
 
-    private async Task<HttpResponseMessage> CreateEntryVote(Guid entryId, CancellationToken cancellationToken, VoteType vote = VoteType.UpVote)
+    private async Task<HttpResponseMessage> CreateEntryVote(Guid entryId, VoteType vote = VoteType.UpVote)
     {
-        var res = await _client.PostAsync($"/api/vote/entry/{entryId}?votetype={vote}", null, cancellationToken: cancellationToken);
+        var res = await _client.PostAsync($"/api/vote/entry/{entryId}?votetype={vote}", null);
         return res;
     }
 
-    private async Task<HttpResponseMessage> CreateEntryCommentVote(Guid entryCommentId, CancellationToken cancellationToken, VoteType vote = VoteType.UpVote)
+    private async Task<HttpResponseMessage> CreateEntryCommentVote(Guid entryCommentId, VoteType vote = VoteType.UpVote)
     {
-        var res = await _client.PostAsync($"/api/vote/entry/comment/{entryCommentId}?votetype={vote}", null, cancellationToken: cancellationToken);
+        var res = await _client.PostAsync($"/api/vote/entry/comment/{entryCommentId}?votetype={vote}", null);
         return res;
     }
 

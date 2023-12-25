@@ -1,0 +1,40 @@
+@if (IdentityService.IsLoggedIn)
+{
+    <span class="entry-fav @(IsFavorited ? "entry-faved" : "entry-not-faved") p-3">
+    <span @onclick="( () => FavoritedClicked())">
+        @Count
+    </span>
+</span>
+}
+
+@code {
+    [Inject]
+    IIdentityService IdentityService { get; set; }
+
+    [Parameter]
+    public bool IsFavorited { get; set; }
+
+    [Parameter]
+    public Guid? EntryId { get; set; }
+
+    [Parameter]
+    public int Count { get; set; }
+
+    [Parameter]
+    public EventCallback<FavClickedEventArgs> OnFavClicked { get; set; }
+
+    private async Task FavoritedClicked()
+    {
+        IsFavorited = !IsFavorited;
+
+        var eventArgs = new FavClickedEventArgs();
+        eventArgs.EntryId = EntryId;
+        eventArgs.IsFaved = IsFavorited;
+
+        await OnFavClicked.InvokeAsync(eventArgs);
+
+
+        StateHasChanged();
+
+    }
+}
