@@ -1,9 +1,5 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net.Http.Json;
 using System.Text.Json;
-using System.Threading.Tasks;
 using Blazored.LocalStorage;
 using CodeForge.Common.Infrastructure.Exceptions;
 using CodeForge.Common.Infrastructure.Responses;
@@ -56,7 +52,7 @@ public class IdentityService : IIdentityService
     public async Task<bool> Login(LoginUserCommand command)
     {
         string responseStr;
-        var httpResponse = await httpClient.PostAsJsonAsync("/api/User/Login", command);
+        var httpResponse = await httpClient.PostAsJsonAsync("api/User/Login", command);
 
         if (httpResponse != null && !httpResponse.IsSuccessStatusCode)
         {
@@ -73,8 +69,10 @@ public class IdentityService : IIdentityService
 
 
         responseStr = await httpResponse.Content.ReadAsStringAsync();
-        var response = JsonSerializer.Deserialize<LoginUserViewModel>(responseStr);
+        LoginUserViewModel? response = JsonSerializer.Deserialize<LoginUserViewModel>(responseStr);
 
+        Console.WriteLine($"response : {responseStr}" );
+        Console.WriteLine($"token : {response.Token}" );
         if (!string.IsNullOrEmpty(response.Token)) // login success
         {
             syncLocalStorageService.SetToken(response.Token);
@@ -88,6 +86,7 @@ public class IdentityService : IIdentityService
             return true;
         }
 
+        
         return false;
     }
 

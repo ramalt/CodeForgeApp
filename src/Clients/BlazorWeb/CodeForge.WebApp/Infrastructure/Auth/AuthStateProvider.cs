@@ -1,12 +1,9 @@
-using System;
-using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
 using System.Security.Claims;
-using System.Threading.Tasks;
 using Blazored.LocalStorage;
 using CodeForge.WebApp.Infrastructure.Extensions;
 using Microsoft.AspNetCore.Components.Authorization;
+// using Microsoft.AspNetCore.Components.Authorization;
 
 namespace CodeForge.WebApp.Infrastructure.Services.Auth;
 
