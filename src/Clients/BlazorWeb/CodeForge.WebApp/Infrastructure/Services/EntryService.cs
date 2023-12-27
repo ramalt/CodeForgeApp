@@ -1,7 +1,9 @@
 using System.Net.Http.Json;
+using System.Security.Authentication;
 using CodeForge.Common.ViewModels.Page;
 using CodeForge.Common.ViewModels.Queries;
 using CodeForge.Common.ViewModels.RequestModels;
+using CodeForge.WebApp.Infrastructure.Services.Auth;
 using CodeForge.WebApp.Infrastructure.Services.Interfaces;
 
 namespace CodeForge.WebApp.Infrastructure.Services;
@@ -9,13 +11,18 @@ namespace CodeForge.WebApp.Infrastructure.Services;
 public class EntryService : IEntryService
 {
     private readonly HttpClient _client;
+    private readonly IIdentityService _identity;
 
-    public EntryService(HttpClient client)
+    public EntryService(HttpClient client, IIdentityService identity)
     {
         _client = client;
+        _identity = identity;
     }
     public async Task<Guid> CreateEntry(CreateEntryCommand command)
     {
+        command.OwnerId = _identity.GetUserId();
+        
+        
         var res = await _client.PostAsJsonAsync("/api/Entry", command);
 
         if (!res.IsSuccessStatusCode)
@@ -28,6 +35,8 @@ public class EntryService : IEntryService
 
     public async Task<Guid> CreateEntryComment(CreateEntryCommentCommand command)
     {
+        command.OwnerId = _identity.GetUserId();
+
         var res = await _client.PostAsJsonAsync("/api/Entry/comment", command);
 
         if (!res.IsSuccessStatusCode)
@@ -40,7 +49,7 @@ public class EntryService : IEntryService
 
     public async Task<List<GetEntriesViewModel>> GetEntires()
     {
-        var result = await _client.GetFromJsonAsync<List<GetEntriesViewModel>>("api/Entry?TodaysEntries=false&Count=10");
+        var result = await _client.GetFromJsonAsync<List<GetEntriesViewModel>>("api/Entry?TodaysEntries=false&Count=30");
         return result;
     }
 

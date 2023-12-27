@@ -22,6 +22,8 @@ public class AuthStateProvider : AuthenticationStateProvider
     {
         var apiToken = await localStorage.GetToken();
 
+        Console.WriteLine($"Apli Token From AuthStateProvider: {apiToken}" );
+
         if (string.IsNullOrEmpty(apiToken))
             return anonymous;
 

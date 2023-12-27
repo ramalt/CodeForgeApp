@@ -9,6 +9,7 @@ public static class AuthenticationStateProviderExtension
     {
         var state = await provider.GetAuthenticationStateAsync();
         var userId = state.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+        Console.WriteLine("UserId From AuthenticationStateProviderExtension" + userId);
 
         return !string.IsNullOrEmpty(userId) ? new Guid(userId) : Guid.Empty;
     }

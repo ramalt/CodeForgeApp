@@ -1,24 +1,22 @@
-@if (Entry != null)
+@if (EntryComment != null)
 {
 
     <div class="card border-0 col-md-12">
 
-    <div class="card-body">
+    <div class="card-body col-md-12">
 
-        <p class="entry-content">@Entry.Content</p>
+        <p class="entry-content">@EntryComment.Content</p>
 
-
-
-        <EntryFooterFavoriteComponent EntryId="@Entry.Id" OnFavClicked="@OnFavClicked"
-            FavoritedCount="@Entry.FavoritedCount" IsFavorited="@Entry.IsFavorited" />
+        <EntryFooterFavoriteComponent EntryId="@EntryComment.Id" OnFavClicked="@OnFavClicked"
+            Count="@EntryComment.FavoritedCount" IsFavorited="@EntryComment.IsFavorited" />
 
 
-        <EntryFooterRateFavoriteComponent EntryId="@Entry.Id" OnFavClicked="@OnFavClicked"
-            OnVoteClicked="@OnVoteClicked" Vote="@Entry.Vote" FavoritedCount="@Entry.FavoritedCount"
-            IsFavorited="@Entry.IsFavorited" />
+        <EntryFooterRateFavoriteComponent EntryId="@EntryComment.Id" OnFavClicked="@OnFavClicked"
+            OnVoteClicked="@OnVoteClicked" Vote="@EntryComment.Vote" Count="@EntryComment.FavoritedCount"
+            IsFavorited="@EntryComment.IsFavorited" />
 
 
-        <EntryFooterAuthorComponent UserName="@Entry.OwnerUserName" CreateDate="@Entry.CreatedDate" />
+        <EntryFooterAuthorComponent UserName="@EntryComment.CreatedByUserName" CreateDate="@EntryComment.CreatedDate" />
 
     </div>
 </div>
@@ -28,10 +26,7 @@
 @code {
 
     [Parameter]
-    public GetEntryDetailViewModel Entry { get; set; }
-
-    [Parameter]
-    public bool MyEntries { get; set; }
+    public GetEntryCommentsViewModel EntryComment { get; set; }
 
     [Inject]
     IVoteService voteService { get; set; }
@@ -44,14 +39,14 @@
         if (args.IsFaved)
         {
             await favService.CreateEntryFav(args.EntryId.Value);
-            Entry.IsFavorited = true;
-            Entry.FavoritedCount++;
+            EntryComment.IsFavorited = true;
+            EntryComment.FavoritedCount++;
         }
         else
         {
             await favService.DeleteEntryFav(args.EntryId.Value);
-            Entry.IsFavorited = false;
-            Entry.FavoritedCount--;
+            EntryComment.IsFavorited = false;
+            EntryComment.FavoritedCount--;
         }
 
         StateHasChanged();
@@ -62,21 +57,21 @@
         if (args.UpVoteDeleted || args.DownVoteDeleted)
         {
             await voteService.DeleteEntryVote(args.EntryId);
-            Entry.Vote = VoteType.None;
+            EntryComment.Vote = VoteType.None;
             return;
         }
 
         if (args.IsUpVoteClicked)
         {
             await voteService.CreateEntryUpVote(args.EntryId);
-            Entry.Vote = VoteType.UpVote;
+            EntryComment.Vote = VoteType.UpVote;
             return;
         }
 
         if (args.IsDownVoteClicked)
         {
             await voteService.CreateEntryDownVote(args.EntryId);
-            Entry.Vote = VoteType.DownVote;
+            EntryComment.Vote = VoteType.DownVote;
             return;
         }
     }

@@ -16,6 +16,8 @@ public class AuthTokenHandler : DelegatingHandler
     {
         var token = syncLocalStorageService.GetToken();
 
+        Console.WriteLine($"Token from ISyncLocalStorageService {token}");
+
         if (!string.IsNullOrEmpty(token) && (request.Headers.Authorization is null || string.IsNullOrEmpty(request.Headers.Authorization.Parameter)))
             request.Headers.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("bearer", token);
 

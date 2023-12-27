@@ -64,6 +64,7 @@ public static class LocalStorageExtension
     public static string GetToken(this ISyncLocalStorageService localStorageService)
     {
         var token = localStorageService.GetItem<string>(TokenName);
+        Console.WriteLine("Token value get from LocalStorageExtension: " + token);
 
         return token;
     }
@@ -71,6 +72,8 @@ public static class LocalStorageExtension
     public static async Task<string> GetToken(this ILocalStorageService localStorageService)
     {
         var token = await localStorageService.GetItemAsync<string>(TokenName);
+        Console.WriteLine("Token value get from LocalStorageExtension: " + token);
+
 
         return token;
     }
@@ -78,11 +81,15 @@ public static class LocalStorageExtension
     public static void SetToken(this ISyncLocalStorageService localStorageService, string value)
     {
         localStorageService.SetItem(TokenName, value);
+        Console.WriteLine("Token value set from LocalStorageExtension: " + value);
+
     }
 
     public static async Task SetToken(this ILocalStorageService localStorageService, string value)
     {
         await localStorageService.SetItemAsync(TokenName, value);
+        Console.WriteLine("Token value set from LocalStorageExtension: " + value);
+
     }
 
 }

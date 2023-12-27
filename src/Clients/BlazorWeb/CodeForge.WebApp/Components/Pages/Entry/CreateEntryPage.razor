@@ -1,0 +1,45 @@
+@page "/create-entry"
+
+<br>
+<br>
+
+<CascadingAuthenticationState>
+    <EditForm Model="@command" OnValidSubmit="@CreateEntry" class="">
+
+        <div class="entry-comment-add-container p-5">
+
+
+            <div class="entry-comment-add">
+
+                <InputText @bind-Value="command.Subject" class="form-control" aria-placeholder="subject" />
+
+                <InputTextArea @bind-Value="command.Content" class="entry-comment-textarea" />
+
+                <div class="entry-comment-actions">
+                    <input type="submit" class="btn btn-success btn-sozluk" value="Send" />
+                </div>
+
+            </div>
+
+        </div>
+    </EditForm>
+</CascadingAuthenticationState>
+
+
+@code {
+    [Inject]
+    public IEntryService EntryService { get; set; }
+
+    [Inject]
+    public NavigationManager NavigationManager { get; set; }
+
+    private CreateEntryCommand command = new();
+
+    public async Task CreateEntry()
+    {
+        Guid createdEntryId = await EntryService.CreateEntry(command);
+
+        NavigationManager.NavigateTo($"/entry/{createdEntryId}");
+
+    }
+}

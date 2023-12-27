@@ -16,6 +16,7 @@ public class EntryController : BaseController
     public EntryController(ISender sender)
     {
         _sender = sender;
+        // Console.WriteLine("User id ----------------------_>" + UserId);
     }
     [HttpGet]
     public async Task<IActionResult> GetEntries([FromQuery] GetEntriesQuery query)
