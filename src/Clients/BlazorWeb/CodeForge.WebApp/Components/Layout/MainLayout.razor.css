@@ -4,6 +4,8 @@
     height: 6.5rem;
     align-items: flex-start;
     position: sticky;
+    background-color: red;
+    top: 0;
 }
 
 .logo
