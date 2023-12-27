@@ -68,4 +68,14 @@ public class UserController : BaseController
 
         return Ok(user);
     }
+
+    [HttpGet]
+    [Route("UserName/{userName}")]
+    public async Task<IActionResult> GetByUserName(string userName)
+    {
+        var user = await _sender.Send(new GetUserDetailQuery(Guid.Empty, userName));
+
+        return Ok(user);
+    }
+
 }
