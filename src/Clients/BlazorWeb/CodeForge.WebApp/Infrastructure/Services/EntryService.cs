@@ -76,7 +76,7 @@ public class EntryService : IEntryService
 
     public async Task<PageViewModel<GetEntryDetailViewModel>> GetProfilePageEntries(int page, int pageSize, string userName = null)
     {
-
+        userName = _identity.GetUserName();
         var result = await _client.GetFromJsonAsync<PageViewModel<GetEntryDetailViewModel>>($"/api/entry/user?userName={userName}&page={page}&pageSize={pageSize}");
 
         return result;

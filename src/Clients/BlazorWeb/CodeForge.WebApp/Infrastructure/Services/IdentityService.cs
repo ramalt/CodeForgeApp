@@ -41,7 +41,7 @@ public class IdentityService : IIdentityService
 
     public string GetUserName()
     {
-        return syncLocalStorageService.GetToken();
+        return syncLocalStorageService.GetUserName();
     }
 
     public Guid GetUserId()
