@@ -52,7 +52,9 @@ public class LoginUserCommandHandler : IRequestHandler<LoginUserCommand, LoginUs
             new Claim(ClaimTypes.Surname, dbUser.LastName),
         ];
 
-        result.SetToken(GenerateToken(claims));
+        result.Token = GenerateToken(claims);
+
+        Console.WriteLine($"--> USER TOKEN: {result.Token.ToString()}");
         return result;
 
     }

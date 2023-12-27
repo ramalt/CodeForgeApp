@@ -15,12 +15,15 @@ public class MappingProfile : Profile
 
         CreateMap<UpdateUserCommand, User>();
 
+        CreateMap<UserDetailViewModel, User>().ReverseMap();
+        
         CreateMap<CreateEntryCommand, Entry>().ReverseMap();
 
         CreateMap<CreateEntryCommentCommand, EntryComment>().ReverseMap();
 
         CreateMap<Entry, GetEntriesViewModel>().ForMember(e => e.CommentCount,
                                                           evm => evm.MapFrom(e => e.EntryComments.Count));
+
 
     }
 }

@@ -1,0 +1,65 @@
+@page "/entry/{id:guid}"
+
+@if (entry is not null)
+{
+    <EntryCardComponent Entry="@entry" />
+    <br />
+
+
+    if (comments is not null)
+    {
+        foreach (var comment in comments.Result)
+        {
+            <EntryCommentCardComponent EntryComment="@comment" />
+        }
+    }
+    <br />
+    //pagination
+
+    <AuthorizeView>
+    <Authorized>
+        <br />
+        <br />
+        <CreateEntryCommentComponent EntryId="@entry.Id" EntrySubject="@entry.Subject" OnClicked="@OnCommentCreated" />
+    </Authorized>
+</AuthorizeView>
+
+
+}
+
+@code {
+    [Parameter]
+    public Guid Id { get; set; }
+
+    [Inject]
+    IEntryService EntryService { get; set; }
+
+    private GetEntryDetailViewModel entry = new();
+
+    private PageViewModel<GetEntryCommentsViewModel> comments = new();
+
+    private int currentPage = 1;
+
+
+    public async Task OnCommentCreated(CreateEntryCommentCommand command)
+    {
+        await EntryService.CreateEntryComment(command);
+        await RefreshComments(currentPage);
+    }
+
+    private async Task RefreshComments(int pageNumber)
+    {
+        comments = await EntryService.GetEntryComments(entry.Id, pageNumber, 7);
+    }
+
+    protected override async Task OnParametersSetAsync()
+    {
+        entry = await EntryService.GetEntryDetail(Id);
+
+        currentPage = comments.PageInfo.CurrentPage;
+
+        await RefreshComments(currentPage);
+    }
+
+
+}

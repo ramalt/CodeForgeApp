@@ -1,0 +1,40 @@
+<CascadingAuthenticationState>
+    <EditForm Model="@command" OnValidSubmit="@CreateEntryComment">
+        <div class="entry-comment-add-container">
+            <div class="entry-comment-add">
+
+                <InputTextArea @bind-Value="command.Content" class="entry-comment-textarea" />
+
+                <div class="entry-comment-actions">
+                    <input type="submit" class="btn btn-success btn-sozluk" value="Send" />
+                </div>
+
+            </div>
+        </div>
+
+    </EditForm>
+
+</CascadingAuthenticationState>
+
+@code {
+    [Parameter]
+    public Guid EntryId { get; set; }
+
+    [Parameter]
+    public string EntrySubject { get; set; }
+
+    [Parameter]
+    public EventCallback<CreateEntryCommentCommand> OnClicked { get; set; }
+
+    private string placeHolderText => $"'{EntrySubject}' hakkında bişeyler söyleyin";
+
+    private CreateEntryCommentCommand command = new();
+
+
+    public async Task CreateEntryComment()
+    {
+        command.EntryId = EntryId;
+
+        await OnClicked.InvokeAsync(command);
+    }
+}

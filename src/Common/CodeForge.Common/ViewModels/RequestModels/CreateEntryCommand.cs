@@ -8,7 +8,7 @@ public class CreateEntryCommand : IRequest<Guid>
     public string Content { get; set; }
     public Guid? OwnerId { get; set; }
 
-    public CreateEntryCommand(string subject, Guid ownerId, string content)
+    public CreateEntryCommand(string subject, Guid? ownerId, string content)
     {
         Subject = subject;
         OwnerId = ownerId;

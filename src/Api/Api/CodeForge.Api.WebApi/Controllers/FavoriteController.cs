@@ -25,7 +25,7 @@ public class FavoriteController : BaseController
     }
 
     [HttpPost]
-    [Route("entrycomment/{entrycommentId}")]
+    [Route("entry/comment/{entrycommentId}")]
     public async Task<IActionResult> CreateEntryCommentFav(Guid entrycommentId)
     {
         var result = await _sender.Send(new CreateEntryCommentFavCommand(entrycommentId, UserId.Value));
@@ -34,8 +34,8 @@ public class FavoriteController : BaseController
     }
 
 
-    [HttpPost]
-    [Route("deleteentryfav/{entryId}")]
+    [HttpDelete]
+    [Route("entry/{entryId}")]
     public async Task<IActionResult> DeleteEntryFav(Guid entryId)
     {
         var result = await _sender.Send(new DeleteEntryFavCommand(entryId, UserId.Value));
@@ -43,8 +43,8 @@ public class FavoriteController : BaseController
         return Ok(result);
     }
 
-    [HttpPost]
-    [Route("deleteentrycommentfav/{entrycommentId}")]
+    [HttpDelete]
+    [Route("entry/comment/{entrycommentId}")]
     public async Task<IActionResult> DeleteEntryCommentFav(Guid entrycommentId)
     {
         var result = await _sender.Send(new DeleteEntryCommentFavCommand(entrycommentId, UserId.Value));

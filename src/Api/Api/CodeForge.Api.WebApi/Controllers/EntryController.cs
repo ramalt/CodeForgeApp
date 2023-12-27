@@ -16,6 +16,7 @@ public class EntryController : BaseController
     public EntryController(ISender sender)
     {
         _sender = sender;
+        // Console.WriteLine("User id ----------------------_>" + UserId);
     }
     [HttpGet]
     public async Task<IActionResult> GetEntries([FromQuery] GetEntriesQuery query)
@@ -70,7 +71,7 @@ public class EntryController : BaseController
     }
 
     [HttpGet]
-    [Route("user/comment")]
+    [Route("user")]
     public async Task<IActionResult> GetUserEntries(string userName, Guid userId, int page, int pageSize)
     {
         if (userId == Guid.Empty && string.IsNullOrEmpty(userName))
