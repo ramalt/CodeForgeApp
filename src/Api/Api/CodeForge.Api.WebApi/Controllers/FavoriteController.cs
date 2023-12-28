@@ -19,7 +19,7 @@ public class FavoriteController : BaseController
     [Route("entry/{entryId}")]
     public async Task<IActionResult> CreateEntryFav(Guid entryId)
     {
-        var result = await _sender.Send(new CreateEntryFavCommand(entryId, UserId.Value));
+        var result = await _sender.Send(new CreateEntryFavCommand(id: entryId, createdBy: UserId.Value));
 
         return Ok(result);
     }
@@ -28,7 +28,7 @@ public class FavoriteController : BaseController
     [Route("entry/comment/{entrycommentId}")]
     public async Task<IActionResult> CreateEntryCommentFav(Guid entrycommentId)
     {
-        var result = await _sender.Send(new CreateEntryCommentFavCommand(entrycommentId, UserId.Value));
+        var result = await _sender.Send(new CreateEntryCommentFavCommand(userId: entrycommentId, entryCommentId: UserId.Value));
 
         return Ok(result);
     }
@@ -38,7 +38,7 @@ public class FavoriteController : BaseController
     [Route("entry/{entryId}")]
     public async Task<IActionResult> DeleteEntryFav(Guid entryId)
     {
-        var result = await _sender.Send(new DeleteEntryFavCommand(entryId, UserId.Value));
+        var result = await _sender.Send(new DeleteEntryFavCommand(createdBy: entryId, id: UserId.Value));
 
         return Ok(result);
     }
@@ -47,7 +47,7 @@ public class FavoriteController : BaseController
     [Route("entry/comment/{entrycommentId}")]
     public async Task<IActionResult> DeleteEntryCommentFav(Guid entrycommentId)
     {
-        var result = await _sender.Send(new DeleteEntryCommentFavCommand(entrycommentId, UserId.Value));
+        var result = await _sender.Send(new DeleteEntryCommentFavCommand(createdBy: entrycommentId, id: UserId.Value));
 
         return Ok(result);
     }

@@ -1,5 +1,6 @@
 using CodeForge.Common;
 using CodeForge.Common.Events.Entry;
+using CodeForge.Common.Events.EntryComment;
 using CodeForge.Common.Infrastructure;
 
 namespace CodeForge.Projections.VoteService;
@@ -40,6 +41,28 @@ public class Worker : BackgroundService
                 _logger.LogInformation("Delete Entry Received EntryId: {0}", vote.EntryId);
             })
             .startConsuming(AppConstants.DELETE_ENTRY_VOTE_QUEUE_NAME);
+
+
+
+                QueueFactory.CreateBasicConsumer()
+            .EnsureExchange(AppConstants.VOTE_EXCHANGE_NAME)
+            .EnsureQueue(AppConstants.CREATE_COMMENT_VOTE_QUEUE_NAME, AppConstants.VOTE_EXCHANGE_NAME)
+            .Receive<CreateEntryCommentVoteEvent>(vote =>
+            {
+                voteService.CreateEntryCommentVote(vote).GetAwaiter().GetResult();
+                _logger.LogInformation("Create Entry Received EntryId: {0}, VoteType: {1}", vote.Id, vote.Vote);
+            })
+            .startConsuming(AppConstants.CREATE_COMMENT_VOTE_QUEUE_NAME);
+
+        QueueFactory.CreateBasicConsumer()
+            .EnsureExchange(AppConstants.VOTE_EXCHANGE_NAME)
+            .EnsureQueue(AppConstants.DELETE_COMMENT_VOTE_QUEUE_NAME, AppConstants.VOTE_EXCHANGE_NAME)
+            .Receive<DeleteEntryCommentVoteEvent>(vote =>
+            {
+                voteService.DeleteEntryCommentVote(vote.Id, vote.CreatedBy).GetAwaiter().GetResult();
+                _logger.LogInformation("Delete Entry Received EntryId: {0}", vote.Id);
+            })
+            .startConsuming(AppConstants.DELETE_COMMENT_VOTE_QUEUE_NAME);
 
     }
 }

@@ -20,7 +20,7 @@ public class VoteService
 
         using var connection = new SqlConnection(_connectionString);
 
-        await connection.ExecuteAsync("INSERT INTO ENTRYVOTE (Id, CreateDate, EntryId, VoteType, OwnerId) VALUES (@Id, GETDATE(), @EntryId, @VoteType, @OwnerId)",
+        await connection.ExecuteAsync("INSERT INTO ENTRYVOTE (Id, CreatedDate, EntryId, VoteType, OwnerId) VALUES (@Id, GETDATE(), @EntryId, @VoteType, @OwnerId)",
             new
             {
                 Id = Guid.NewGuid(),
@@ -48,7 +48,7 @@ public class VoteService
 
         using var connection = new SqlConnection(_connectionString);
 
-        await connection.ExecuteAsync("INSERT INTO ENTRYCOMMENTVOTE (Id, CreateDate, EntryCommentId, VoteType, CREATEDBYID) VALUES (@Id, GETDATE(), @EntryCommentId, @VoteType, @CreatedById)",
+        await connection.ExecuteAsync("INSERT INTO ENTRYCOMMENTVOTE (Id, CreatedDate, EntryCommentId, VoteType, OwnerId) VALUES (@Id, GETDATE(), @EntryCommentId, @VoteType, @CreatedById)",
             new
             {
                 Id = Guid.NewGuid(),
@@ -62,7 +62,7 @@ public class VoteService
     {
         using var connection = new SqlConnection(_connectionString);
 
-        await connection.ExecuteAsync("DELETE FROM EntryCommentVote WHERE EntryCommentId = @EntryCommentId AND CREATEDBYID = @UserId",
+        await connection.ExecuteAsync("DELETE FROM EntryCommentVote WHERE EntryCommentId = @EntryCommentId AND OwnerId = @UserId",
             new
             {
                 EntryCommentId = entryCommentId,

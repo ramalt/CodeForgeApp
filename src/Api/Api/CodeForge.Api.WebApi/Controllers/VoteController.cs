@@ -20,7 +20,7 @@ public class VoteController : BaseController
     [Route("entry/{entryId}")]
     public async Task<IActionResult> CreateEntryVote(Guid entryId, VoteType voteType = VoteType.UpVote)
     {
-        var result = await _sender.Send(new CreateEntryVoteCommand(voteType, entryId, UserId.Value));
+        var result = await _sender.Send(new CreateEntryVoteCommand(vote: voteType, createdBy: entryId, entryId: UserId.Value));
 
         return Ok(result);
     }
@@ -29,7 +29,7 @@ public class VoteController : BaseController
     [Route("entry/comment/{entryCommentId}")]
     public async Task<IActionResult> CreateEntryCommentVote(Guid entryCommentId, VoteType voteType = VoteType.UpVote)
     {
-        var result = await _sender.Send(new CreateEntryCommentVoteCommand(entryCommentId, voteType, UserId.Value));
+        var result = await _sender.Send(new CreateEntryCommentVoteCommand(createdBy: entryCommentId, vote: voteType, id: UserId.Value));
 
         return Ok(result);
     }
@@ -38,7 +38,7 @@ public class VoteController : BaseController
     [Route("entry/{entryId}")]
     public async Task<IActionResult> DeleteEntryVote(Guid entryId)
     {
-        await _sender.Send(new DeleteEntryVoteCommand(entryId, UserId.Value));
+        await _sender.Send(new DeleteEntryVoteCommand(entryId: entryId, createdBy: UserId.Value));
 
         return Ok();
     }
@@ -47,7 +47,7 @@ public class VoteController : BaseController
     [Route("entry/comment/{entryId}")]
     public async Task<IActionResult> DeleteEntryCommentVote(Guid entryCommentId)
     {
-        await _sender.Send(new DeleteEntryCommentVoteCommand(entryCommentId, UserId.Value));
+        await _sender.Send(new DeleteEntryCommentVoteCommand(createdBy: entryCommentId, id: UserId.Value));
 
         return Ok();
     }
