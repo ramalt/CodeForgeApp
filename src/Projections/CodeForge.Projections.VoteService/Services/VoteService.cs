@@ -1,4 +1,5 @@
 using CodeForge.Common.Events.Entry;
+using CodeForge.Common.Events.EntryComment;
 using Dapper;
 using Microsoft.Data.SqlClient;
 
@@ -37,6 +38,34 @@ public class VoteService
             new
             {
                 EntryId = entryId,
+                UserId = userId
+            });
+    }
+
+    public async Task CreateEntryCommentVote(CreateEntryCommentVoteEvent vote)
+    {
+        await DeleteEntryCommentVote(vote.Id, vote.CreatedBy);
+
+        using var connection = new SqlConnection(_connectionString);
+
+        await connection.ExecuteAsync("INSERT INTO ENTRYCOMMENTVOTE (Id, CreateDate, EntryCommentId, VoteType, CREATEDBYID) VALUES (@Id, GETDATE(), @EntryCommentId, @VoteType, @CreatedById)",
+            new
+            {
+                Id = Guid.NewGuid(),
+                EntryCommentId = vote.Id,
+                VoteType = Convert.ToInt16(vote.Vote),
+                CreatedById = vote.CreatedBy
+            });
+    }
+
+    public async Task DeleteEntryCommentVote(Guid entryCommentId, Guid userId)
+    {
+        using var connection = new SqlConnection(_connectionString);
+
+        await connection.ExecuteAsync("DELETE FROM EntryCommentVote WHERE EntryCommentId = @EntryCommentId AND CREATEDBYID = @UserId",
+            new
+            {
+                EntryCommentId = entryCommentId,
                 UserId = userId
             });
     }
