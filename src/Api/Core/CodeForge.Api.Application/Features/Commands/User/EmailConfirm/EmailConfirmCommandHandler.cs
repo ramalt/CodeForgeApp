@@ -15,7 +15,7 @@ public class EmailConfirmCommandHandler : IRequestHandler<EmailConfirmCommand, b
 
     public async Task<bool> Handle(EmailConfirmCommand request, CancellationToken cancellationToken)
     {
-        var confirmation = await _manager.EmailConfirmation.GetByIdAsync(request.ConfirmationUserId);
+        var confirmation = await _manager.EmailConfirmation.GetByIdAsync(request.ConfirmationId);
 
         if (confirmation is null)
             throw new DbValidationException("Confirmation not found");

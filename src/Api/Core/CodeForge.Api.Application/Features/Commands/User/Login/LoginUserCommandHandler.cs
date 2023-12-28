@@ -54,7 +54,6 @@ public class LoginUserCommandHandler : IRequestHandler<LoginUserCommand, LoginUs
 
         result.Token = GenerateToken(claims);
 
-        Console.WriteLine($"--> USER TOKEN: {result.Token.ToString()}");
         return result;
 
     }

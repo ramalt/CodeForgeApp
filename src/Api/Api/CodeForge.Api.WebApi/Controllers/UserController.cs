@@ -45,7 +45,7 @@ public class UserController : BaseController
     [Route("confirm")]
     public async Task<IActionResult> Confirm(Guid id)
     {
-        EmailConfirmCommand emailConfirm = new() { ConfirmationUserId = id };
+        EmailConfirmCommand emailConfirm = new() { ConfirmationId = id };
         var res = await _sender.Send(emailConfirm);
         return Ok(res);
     }
